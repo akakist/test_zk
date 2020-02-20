@@ -889,7 +889,7 @@ void SocketIO::Service::closeSocket(const REF_getter<epoll_socket_info>&esi,cons
     MUTEX_INSPECTOR;
     if(esi->closed())
     {
-        logErr2("@@  socket already closed %s",reason.c_str());
+//        logErr2("@@  socket already closed %s",reason.c_str());
         return;
     }
 

@@ -29,6 +29,7 @@ public:
     {
 
         std::set<msockaddr_in> peers_online;
+        std::set<msockaddr_in> offline_printed;
 
     };
     _mx mx;
@@ -50,9 +51,10 @@ public:
                 needPrint=true;
 
             }
-            if(!isUp && isOnlineBefore)
+            if(!isUp && (isOnlineBefore || !mx.offline_printed.count(sa)))
             {
                 mx.peers_online.erase(sa);
+                mx.offline_printed.insert(sa);
                 needPrint=true;
             }
         }
@@ -97,6 +99,7 @@ public:
         {
             auto ee=dynamic_cast<socketEvent::Connected*>(e.operator->());
             sendEvent(ServiceEnum::Timer, new timerEvent::ResetAlarm(TI_NEXT_PING,outV(ee->esi->remote_name),nullptr,TI_NEXT_PING_val,this));
+            ee->esi->close("manual close");
             markOnline(ee->esi->remote_name,true);
             return true;
 
