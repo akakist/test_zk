@@ -58,7 +58,6 @@ public:
         }
         if(needPrint)
         {
-            mx.peers_online.insert(sa);
             ///dd-MM-yyyy hh:mm:ss.fff, ip:port down
             timeb tb;
             ftime(&tb);
