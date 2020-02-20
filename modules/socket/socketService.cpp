@@ -371,6 +371,7 @@ void SocketIO::Service::onEPOLLOUT(const REF_getter<epoll_socket_info>&__EV_)
         }
         if(getpeername(CONTAINER(esi->get_fd()),  remote_name.addr(), &sr))
         {
+    	    return;
             throw CommonError("getpeername: errno fd=%d %d %s (%s %d)",CONTAINER(esi->get_fd()),errno,strerror(errno),__FILE__,__LINE__);
         }
         esi->local_name=local_name;
@@ -579,7 +580,7 @@ void SocketIO::Service::onEPOLLERR(const REF_getter<epoll_socket_info>& esi)
         if(error!=0)
         {
 #ifndef __FreeBSD__
-            printf("error = %s\n", strerror(error));
+//            printf("error = %s\n", strerror(error));
 #endif
         }
     }
