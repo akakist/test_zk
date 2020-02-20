@@ -27,7 +27,6 @@ public:
 
     struct _mx: public Mutexable
     {
-        std::map<SOCKET_id,msockaddr_in> sock2addr;
 
         std::set<msockaddr_in> peers_online;
 
@@ -151,7 +150,6 @@ int main(int argc, char *argv[])
         return 1;
     }
     auto proxy_list=iUtils->load_file(argv[1]);
-//    auto proxy_list=iUtils->load_file("proxy_list.txt");
 
     auto ls=iUtils->splitString("\r\n",proxy_list);
     for(auto& l:ls)
@@ -170,5 +168,4 @@ int main(int argc, char *argv[])
 
 
 
-//    return a.exec();
 }

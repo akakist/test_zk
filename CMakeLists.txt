@@ -77,17 +77,6 @@ add_subdirectory(corelib)
 add_subdirectory(modules)
 add_subdirectory(mt_lib)
 add_subdirectory(peerObserver)
+add_subdirectory(lib/jsoncpp-0.5.0/src/lib_json)
 
-
-#add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/madison  ${CMAKE_CURRENT_BINARY_DIR}/madison)
-#add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/guard  ${CMAKE_CURRENT_BINARY_DIR}/guard)
-#add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/coop  ${CMAKE_CURRENT_BINARY_DIR}/coop)
-
-#add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/blockchain  ${CMAKE_CURRENT_BINARY_DIR}/blockchain)
-#add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/svs  ${CMAKE_CURRENT_BINARY_DIR}/svs)
-#add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/IMCloud  ${CMAKE_CURRENT_BINARY_DIR}/imcloud)
-
-#add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/dfs_lib/lib/zxing-cpp/src  ${CMAKE_CURRENT_BINARY_DIR}/dfs_lib/lib/zxing-cpp/src)
-#add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/IMSF  ${CMAKE_CURRENT_BINARY_DIR}/imsf)
-#add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/IM  ${CMAKE_CURRENT_BINARY_DIR}/im)
 
