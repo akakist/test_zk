@@ -62,7 +62,7 @@ CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/test_config.h.in"
 
 
 set(CMAKE_CONFIGURATION_TYPES "Debug" CACHE STRING "" FORCE )
-add_definitions(  -DDEBUG -DMUTEX_INSPECTOR_DEBUG)
+#add_definitions(  -DDEBUG -DMUTEX_INSPECTOR_DEBUG)
     add_definitions(  -DWITHOUT_UPNP -DREAL_DOUBLE)
 
 find_library(GTest REQUIRED)
