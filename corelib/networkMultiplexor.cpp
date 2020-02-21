@@ -8,7 +8,7 @@
 NetworkMultiplexor::~NetworkMultiplexor()
 {
 #ifdef HAVE_EPOLL
-    logErr2("close m_socks->m_epoll.m_epollFd %d",m_epoll.m_epollFd);
+//    logErr2("close m_socks->m_epoll.m_epollFd %d",m_epoll.m_epollFd);
     if(::close(m_epoll.m_epollFd))
         logErr2("close: %d", errno);
 #endif

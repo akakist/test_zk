@@ -180,7 +180,7 @@ int main(int argc, char *argv[])
     }
     while(!terminating)
     {
-	printf("slp %d \n",terminating);
+//	printf("slp %d \n",terminating);
         sleep(1);
     }
 
