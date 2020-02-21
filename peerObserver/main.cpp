@@ -6,6 +6,7 @@
 #include "tools_mt.h"
 #include "url.h"
 #include "objectHandler.h"
+#include <signal.h>
 #include "Events/System/Net/socket/AddToConnectTCP.h"
 #include "Events/System/Net/socket/ConnectFailed.h"
 #include "Events/System/Net/socket/Connected.h"
@@ -129,9 +130,21 @@ void registerSocketModule(const char* pn);
 void registerTimerService(const char* pn);
 void registerObjectProxyModule(const char* pn);
 
+bool terminating=false;
+void onterm(int signum)
+{
+    printf("signal %d\n",signum);
+    if(signum==SIGINT)
+    {
+	terminating=true;
+    }
+    printf("terminating %d",terminating);
+}
 int main(int argc, char *argv[])
 {
 
+
+    signal(SIGINT,onterm);
 
     std::string appName=argv[0];
     iUtils=new CUtils(argc,argv,appName);
@@ -151,6 +164,7 @@ int main(int argc, char *argv[])
         printf("usage: %s <addlist>\n",argv[0]);
         return 1;
     }
+    {
     auto proxy_list=iUtils->load_file(argv[1]);
 
     auto ls=iUtils->splitString("\r\n",proxy_list);
@@ -163,10 +177,14 @@ int main(int argc, char *argv[])
         sa.init(u);
         obs.addPeer(sa);
     }
-    while(1)
+    }
+    while(!terminating)
     {
+	printf("slp %d \n",terminating);
         sleep(1);
     }
+
+    delete iUtils;
 
 
 
