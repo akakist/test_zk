@@ -404,7 +404,7 @@ void SocketIO::Service::onEPOLLOUT(const REF_getter<epoll_socket_info>&__EV_)
             {
                 if (epoll_ctl(m_socks->multiplexor->m_epoll.m_epollFd, EPOLL_CTL_MOD, CONTAINER(esi->get_fd()), &evtz) < 0)
                 {
-                    logErr2("epoll_ctl mod: socket '%d' - errno %d",CONTAINER(esi->get_fd()), errno);
+                    logErr2("epoll_ctl mod: socket '%d' - errno %d (%s %d)",CONTAINER(esi->get_fd()), errno,__FILE__,__LINE__);
                 }
             }
 
@@ -480,7 +480,7 @@ void SocketIO::Service::onEPOLLOUT(const REF_getter<epoll_socket_info>&__EV_)
                             {
                                 if (epoll_ctl(m_socks->multiplexor->m_epoll.m_epollFd, EPOLL_CTL_MOD, CONTAINER(esi->get_fd()), &evtz) < 0)
                                 {
-                                    logErr2("epoll_ctl mod: socket '%d' - errno %d",CONTAINER(esi->get_fd()), errno);
+                                    logErr2("epoll_ctl mod: socket '%d' - errno %d (%s %d)",CONTAINER(esi->get_fd()), errno,__FILE__,__LINE__);
                                 }
                             }
                         }
@@ -1254,7 +1254,7 @@ bool  SocketIO::Service::on_AddToConnectTCP(const socketEvent::AddToConnectTCP*e
 
         if (epoll_ctl(m_socks->multiplexor->m_epoll.m_epollFd, EPOLL_CTL_ADD, CONTAINER(nesi->get_fd()), &evtz) < 0)
         {
-            logErr2("epoll_ctl mod: socket '%d' - errno %d",CONTAINER(nesi->get_fd()), errno);
+            logErr2("epoll_ctl mod: socket '%d' - errno %d (%s %d)",CONTAINER(nesi->get_fd()), errno,__FILE__,__LINE__);
         }
 
     }
