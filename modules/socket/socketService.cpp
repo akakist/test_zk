@@ -400,9 +400,12 @@ void SocketIO::Service::onEPOLLOUT(const REF_getter<epoll_socket_info>&__EV_)
             evtz.events=EPOLLIN;
             evtz.data.u64= static_cast<uint64_t>(CONTAINER(esi->m_id));
 
-            if (epoll_ctl(m_socks->multiplexor->m_epoll.m_epollFd, EPOLL_CTL_MOD, CONTAINER(esi->get_fd()), &evtz) < 0)
+            if(!esi->closed())
             {
-                logErr2("epoll_ctl mod: socket '%d' - errno %d",CONTAINER(esi->get_fd()), errno);
+                if (epoll_ctl(m_socks->multiplexor->m_epoll.m_epollFd, EPOLL_CTL_MOD, CONTAINER(esi->get_fd()), &evtz) < 0)
+                {
+                    logErr2("epoll_ctl mod: socket '%d' - errno %d",CONTAINER(esi->get_fd()), errno);
+                }
             }
 
         }
@@ -473,9 +476,12 @@ void SocketIO::Service::onEPOLLOUT(const REF_getter<epoll_socket_info>&__EV_)
                             struct epoll_event evtz{};
                             evtz.events=EPOLLIN;
                             evtz.data.u64= static_cast<uint64_t>(CONTAINER(esi->m_id));
-                            if (epoll_ctl(m_socks->multiplexor->m_epoll.m_epollFd, EPOLL_CTL_MOD, CONTAINER(esi->get_fd()), &evtz) < 0)
+                            if(!esi->closed())
                             {
-                                logErr2("epoll_ctl mod: socket '%d' - errno %d",CONTAINER(esi->get_fd()), errno);
+                                if (epoll_ctl(m_socks->multiplexor->m_epoll.m_epollFd, EPOLL_CTL_MOD, CONTAINER(esi->get_fd()), &evtz) < 0)
+                                {
+                                    logErr2("epoll_ctl mod: socket '%d' - errno %d",CONTAINER(esi->get_fd()), errno);
+                                }
                             }
                         }
 
@@ -889,7 +895,7 @@ void SocketIO::Service::closeSocket(const REF_getter<epoll_socket_info>&esi,cons
     MUTEX_INSPECTOR;
     if(esi->closed())
     {
-//        logErr2("@@  socket already closed %s",reason.c_str());
+        logErr2("@@  socket already closed %s",reason.c_str());
         return;
     }
 
@@ -1240,6 +1246,7 @@ bool  SocketIO::Service::on_AddToConnectTCP(const socketEvent::AddToConnectTCP*e
     }
 #endif
 #ifdef HAVE_EPOLL
+    if(!nesi->closed())
     {
         struct epoll_event evtz{};
         evtz.events=EPOLLIN|EPOLLOUT;
