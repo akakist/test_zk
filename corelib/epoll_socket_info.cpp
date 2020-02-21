@@ -172,7 +172,7 @@ epoll_socket_info::~epoll_socket_info()
             if(!::close(CONTAINER(m_fd)))
 #endif
             {
-                printf(RED("::closeB %d %s"),errno,strerror(errno));
+//                printf(RED("::closeB %d %s"),errno,strerror(errno));
             }
             CONTAINER(m_id)=-1;
             CONTAINER(m_fd)=-1;
