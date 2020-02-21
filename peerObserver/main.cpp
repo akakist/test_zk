@@ -158,14 +158,18 @@ int main(int argc, char *argv[])
 
 
     PeerObserver obs(iInstance);
+#ifdef KALL
     if(argc!=2)
     {
 
         printf("usage: %s <addlist>\n",argv[0]);
         return 1;
     }
+#endif
     {
-    auto proxy_list=iUtils->load_file(argv[1]);
+    
+//    auto proxy_list=iUtils->load_file(argv[1]);
+    auto proxy_list=iUtils->load_file("proxy_list.txt");
 
     auto ls=iUtils->splitString("\r\n",proxy_list);
     for(auto& l:ls)

@@ -107,7 +107,7 @@ ObjectHandlerPolled::~ObjectHandlerPolled()
 }
 ObjectHandlerThreaded::~ObjectHandlerThreaded()
 {
-    objectProxy->removeObjectHandler(this);
+//    objectProxy->removeObjectHandler(this);
 }
 
 void ObjectHandler::passEvent(const REF_getter<Event::Base>& e)
