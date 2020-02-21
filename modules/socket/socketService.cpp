@@ -404,7 +404,9 @@ void SocketIO::Service::onEPOLLOUT(const REF_getter<epoll_socket_info>&__EV_)
             {
                 if (epoll_ctl(m_socks->multiplexor->m_epoll.m_epollFd, EPOLL_CTL_MOD, CONTAINER(esi->get_fd()), &evtz) < 0)
                 {
+#ifdef DEBUG
                     logErr2("epoll_ctl mod: socket '%d' - errno %d (%s %d)",CONTAINER(esi->get_fd()), errno,__FILE__,__LINE__);
+#endif
                 }
             }
 
@@ -895,7 +897,9 @@ void SocketIO::Service::closeSocket(const REF_getter<epoll_socket_info>&esi,cons
     MUTEX_INSPECTOR;
     if(esi->closed())
     {
+#ifdef DEBUG
         logErr2("@@  socket already closed %s",reason.c_str());
+#endif
         return;
     }
 
