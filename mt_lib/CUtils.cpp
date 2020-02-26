@@ -31,7 +31,6 @@
 #else
 #include <regex.h>
 #endif
-#include <zlib.h>
 #include <version_mega.h>
 #include "test_config.h"
 #if defined(QT5)
@@ -1214,47 +1213,6 @@ std::string CUtils::uriDecode(const std::string &SRC)
     }
     return (ret);
 }
-#ifdef __WITH_ZLIB
-
-REF_getter<refbuffer>  CUtils::zcompress(const REF_getter<refbuffer>& data)
-{
-    if(!data.valid())
-        return data;
-    uLongf olen=data->size_*2;
-    Bytef *obuf=(Bytef*) malloc(olen);
-    if(obuf==NULL)
-        throw std::runtime_error("alloc error");
-    compress(obuf,&olen,(Bytef*)data->buffer,data->size_);
-    std::string ret=std::string((char*)obuf,olen);
-    free(obuf);
-    outBuffer o;
-    o<<data->size_<<ret;
-    return o.asString();
-}
-REF_getter<refbuffer>  CUtils::zexpand(const REF_getter<refbuffer>& data)
-{
-    if(!data.valid())
-        return data;
-    inBuffer in(data);
-//    logErr2("remains %d",in.remains());
-    int64_t expanded_size=in.get_PN();
-//    logErr2("remains %d after extract expanded_size",in.remains());
-//    logErr2("expanded size %ld",expanded_size);
-    std::string buf=in.get_PSTR();
-//    logErr2("packed buf size %d",buf.size());
-    uLongf olen=expanded_size;
-    Bytef *obuf=(Bytef*) malloc(olen);
-    if(obuf==NULL)
-        throw std::runtime_error("alloc error");
-
-    uncompress(obuf,&olen,(Bytef*)buf.data(),buf.size());
-    REF_getter<refbuffer> ret=new refbuffer;//(std::string((char*)obuf,olen);
-    ret->buffer=obuf;
-    ret->size_=olen;
-    ret->capacity=olen;
-    return ret;
-}
-#endif
 std::string CUtils::replace_vals(std::map<std::string,std::string> &p, const std::string &src)
 {
     if(!p.size())return src;
